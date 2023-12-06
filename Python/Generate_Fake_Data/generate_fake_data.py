@@ -10,11 +10,7 @@ def show_methods():
 
 if __name__ == '__main__': 
     coun = input("Select the language of data you want English(0) or Hindi(anything other than 0)" )
-    if(coun == '0'):
-        fake = Faker(country['English'])
-    else:
-        fake = Faker(country['Hindi'])
-    
+    fake = Faker(country['English']) if (coun == '0') else Faker(country['Hindi'])
     method = show_methods()
     cols = []
 
@@ -27,9 +23,7 @@ if __name__ == '__main__':
         contd = input("Do you want more types of data? press 1 for yes and anything for no \n")
         if contd != '1':
             break;
-    struct = []
-    for i in range(len(cols)):
-        struct.append([])
+    struct = [[] for _ in cols]
     if len(col_name) == 0:
         print("Sorry no data type available \n")
     else:

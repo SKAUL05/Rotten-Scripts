@@ -15,37 +15,33 @@ mobile_num = re.compile(r'\b\d{5}-\d{5}\b')     # REGEX for mobile numbers
 phone_num = re.compile(r'\b\d{3}-\d{7}\b')      # REGEX for phone numbers
 
 def find_valid_mobile_number():
-    input_file = open(args.mobile, 'r')             # Open input file
-    # Open output file
-    if args.output:
-        output_file = open(args.output, 'w')
-    else:
-        output_file = open('valid_mobile_numbers.txt', 'w')
-    output_file.write('Valid Mobile Numbers\n')
-    # Valid mobile numbers
-    for line in input_file:
-        valid_mobile_num = mobile_num.findall(line)
-        for mnum in valid_mobile_num:
-            output_file.write(mnum+'\n')
-    # Close files
-    input_file.close()
+    with open(args.mobile, 'r') as input_file:
+        # Open output file
+        if args.output:
+            output_file = open(args.output, 'w')
+        else:
+            output_file = open('valid_mobile_numbers.txt', 'w')
+        output_file.write('Valid Mobile Numbers\n')
+        # Valid mobile numbers
+        for line in input_file:
+            valid_mobile_num = mobile_num.findall(line)
+            for mnum in valid_mobile_num:
+                output_file.write(mnum+'\n')
     output_file.close()
 
 def find_valid_phone_number():
-    input_file = open(args.phone, 'r')             # Open input file
-    # Open output file
-    if args.output:
-        output_file = open(args.output, 'w')
-    else:
-        output_file = open('valid_phone_numbers.txt', 'w')
-    output_file.write('Valid Phone Numbers\n')
-    # Valid phone numbers
-    for line in input_file:
-        valid_phone_num = phone_num.findall(line)
-        for pnum in valid_phone_num:
-            output_file.write(pnum+'\n')
-    # Close files
-    input_file.close()
+    with open(args.phone, 'r') as input_file:
+        # Open output file
+        if args.output:
+            output_file = open(args.output, 'w')
+        else:
+            output_file = open('valid_phone_numbers.txt', 'w')
+        output_file.write('Valid Phone Numbers\n')
+        # Valid phone numbers
+        for line in input_file:
+            valid_phone_num = phone_num.findall(line)
+            for pnum in valid_phone_num:
+                output_file.write(pnum+'\n')
     output_file.close()
 
 def find_all_valid_number():
@@ -62,14 +58,12 @@ def find_all_valid_number():
         for mnum in valid_mobile_num:
             output_file.write(mnum+'\n')
     output_file.write('\nValid Phone Numbers\n')
-    input_file = open(args.all, 'r')             # Open input file
-    # Valid phone numbers
-    for line in input_file:
-        valid_phone_num = phone_num.findall(line)
-        for pnum in valid_phone_num:
-            output_file.write(pnum+'\n')
-    # Close files
-    input_file.close()
+    with open(args.all, 'r') as input_file:
+        # Valid phone numbers
+        for line in input_file:
+            valid_phone_num = phone_num.findall(line)
+            for pnum in valid_phone_num:
+                output_file.write(pnum+'\n')
     output_file.close()
 
 def main():

@@ -10,8 +10,7 @@ init(autoreset=True)
 def get_clipboard_data():
     p = Popen(['pbpaste'], stdout=PIPE)
     p.wait()
-    data = str(p.stdout.read())
-    return data
+    return str(p.stdout.read())
 
 
 def check(mac):
@@ -48,9 +47,7 @@ def clipboard():
     clip = get_clipboard_data()
 
     reCompiler = compile(u'(?:[0-9a-fA-F]:?){12}')
-    reResults = findall(reCompiler, clip)
-
-    if reResults:
+    if reResults := findall(reCompiler, clip):
         for i in reResults:
             if ':' not in i:
                 continue

@@ -34,7 +34,7 @@ for user_name in users.USERS:
     search.send_keys(user_name)
     time.sleep(2)
 
-    user = browser.find_element_by_xpath('//span[@title="{}"]'.format(user_name))
+    user = browser.find_element_by_xpath(f'//span[@title="{user_name}"]')
     user.click()
 
 

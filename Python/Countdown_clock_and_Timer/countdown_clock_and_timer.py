@@ -5,7 +5,7 @@ import time
 os.system('clear')
 
 # using ctime() to show present time
-times = time.ctime()     
+times = time.ctime()
 print("\nCurrent Time: ",times)
 
 print("\n     Welcome to CountdownTimer!\n\n     Let's set up the countdown timer...\n")
@@ -29,15 +29,17 @@ print("\n Timer has been set for "+str(seconds) + " seconds.")
 
 # Loop for displaying the timer
 
-for i in range(seconds, -1, -1):
-    displayHours = int(seconds / 3600)
-    displayMinutes = int(seconds / 60)
+for _ in range(seconds, -1, -1):
+    displayHours = seconds // 3600
+    displayMinutes = seconds // 60
     if displayMinutes >= 60:
-        displayMinutes = displayMinutes - (displayHours * 60)
+        displayMinutes -= displayHours * 60
     else:
         displayMinutes = displayMinutes
     displaySeconds = int(seconds % 60)
-    print("\n     Your time remaining is: {}:{}:{}".format(str(displayHours).zfill(2), str(displayMinutes).zfill(2), str(displaySeconds).zfill(2)))
+    print(
+        f"\n     Your time remaining is: {str(displayHours).zfill(2)}:{str(displayMinutes).zfill(2)}:{str(displaySeconds).zfill(2)}"
+    )
     seconds -= 1
     time.sleep(1)   # delays in the excution of a program for 1 second
 

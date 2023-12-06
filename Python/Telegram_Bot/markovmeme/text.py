@@ -76,7 +76,7 @@ def select_sentence(corpus):
        a sentence.
     """
     text = load_corpus(corpus)
-    return "%s." % random.choice(text.split(".")).strip()
+    return f'{random.choice(text.split(".")).strip()}.'
 
 
 def generate_words_markov(corpus, size=10):
@@ -103,14 +103,14 @@ def generate_words_markov(corpus, size=10):
         if len(possibilities) == 0:
             break
         next_word = random.choice(possibilities)
-        result = "%s %s" % (result, next_word)
+        result = f"{result} {next_word}"
         current = next_word
 
     # Ensure we end in a period.
     if result[-1] in [",", "", " ", "!"]:
         result = result[:-1]
 
-    result = "%s." % result
+    result = f"{result}."
     return result
 
 
@@ -122,14 +122,14 @@ def get_corpus(prefix):
        we assume a .txt extension, and return the full path to the file.
     """
     selection = list_corpus(remove_ext=False)
-    selected = "%s.txt" % (prefix)
+    selected = f"{prefix}.txt"
 
     # Return filename if exists
     corpus_folder = os.path.join(here, "data", "corpus")
     filename = os.path.join(corpus_folder, selected)
 
     if not os.path.exists(filename):
-        sys.exit("Missing corpus file %s" % filename)
+        sys.exit(f"Missing corpus file {filename}")
 
     return filename
 
@@ -139,7 +139,7 @@ def load_corpus(filename):
        both generation functions.
     """
     if not os.path.exists(filename):
-        sys.exit("Cannot find %s" % filename)
+        sys.exit(f"Cannot find {filename}")
 
     # Read and get rid of newlines
     with open(filename, "r") as filey:

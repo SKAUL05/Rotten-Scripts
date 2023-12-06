@@ -5,4 +5,4 @@ def get_meaning(word):
     return dictionary.meaning(word)
 if __name__ == "__main__": 
     word = input("Please enter the word: ")
-    print("Word Meaning : " + str(get_meaning(word)))
+    print(f"Word Meaning : {str(get_meaning(word))}")

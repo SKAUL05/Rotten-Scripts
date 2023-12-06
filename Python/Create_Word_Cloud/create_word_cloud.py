@@ -12,15 +12,12 @@ my_parser.add_argument('--contour_width', action='store', type=int, required=Fal
 my_parser.add_argument('--contour_color', action='store', type=str, required=False, help="Enter the color of the contour you prefer")
 my_parser.add_argument('--color_func', action='store', type=bool, required=False, help="Do you want the color of the mask intact?")
 
-def createWordCloud (text, background_color, mask, contour_width, contour_color, color_func):
+def createWordCloud(text, background_color, mask, contour_width, contour_color, color_func):
     print(text, background_color, mask, contour_color, color_func)
     name = text.split('.')[0]
     text = open(text).read()
     mask = np.array(Image.open(mask))
-    if (color_func is not None):
-        mask_colors = ImageColorGenerator(mask)
-    else:
-        mask_colors = None
+    mask_colors = ImageColorGenerator(mask) if (color_func is not None) else None
     wordcloud = WordCloud(stopwords=STOPWORDS, mask=mask, max_font_size=50, 
                             max_words=1000, background_color=background_color, color_func=mask_colors,
                             contour_width=contour_width, contour_color=contour_color).generate(text)
@@ -28,7 +25,7 @@ def createWordCloud (text, background_color, mask, contour_width, contour_color,
     plt.imshow(wordcloud, interpolation="bilinear")
     plt.axis("off")
     plt.show()
-    wordcloud.to_file(name+'.png')
+    wordcloud.to_file(f'{name}.png')
 
 args = my_parser.parse_args()
 text = args.text

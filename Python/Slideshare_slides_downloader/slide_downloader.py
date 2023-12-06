@@ -10,7 +10,7 @@ def get_image_urls_list(url):
     print("Getting individual slide urls...")
     driver = webdriver.Chrome(r"chromedriver_win32\chromedriver.exe")       #Web driver loaded
     driver.get(url)
-    url_list = list()
+    url_list = []
     for image in driver.find_elements_by_class_name("slide_image"):
         try:
             url_path = image.get_attribute('data-full')                     #'data-full' contains the url of the image
@@ -25,12 +25,12 @@ def get_image_urls_list(url):
 def download_individual_image(url_list):
     print("Downloading individual images...")
     os.mkdir('new_folder')
-    os.chdir(os.path.join(os.getcwd()+'/new_folder'))
-    image_paths = list()
+    os.chdir(os.path.join(f'{os.getcwd()}/new_folder'))
+    image_paths = []
     for i,url in enumerate(url_list):
-        filename = str(i) + '.jpg'
+        filename = f'{str(i)}.jpg'
         urllib.request.urlretrieve(url, filename)                          #downloads image from url with filename to current directory
-        image_paths.append(os.getcwd()+'/'+filename)
+        image_paths.append(f'{os.getcwd()}/{filename}')
     print('Download complete.')
     convert_images_to_pdf(image_paths)
 
@@ -49,11 +49,8 @@ def convert_images_to_pdf(image_paths):
     print("Success!!")
 
 if __name__ == "__main__":
-    if len(sys.argv)>1:         #Get the url of the site from where you want to download
-        url = " ".join(sys.argv[1:])
-    else:
-        url = input('Enter the URL: ')
+    url = " ".join(sys.argv[1:]) if len(sys.argv)>1 else input('Enter the URL: ')
     if not url.startswith(('http://', 'https://')):
-        url = 'https://' + url
+        url = f'https://{url}'
     get_image_urls_list(url)
     shutil.rmtree('new_folder')

@@ -19,7 +19,7 @@ def extractLinks(url):
   links = re.findall("http.?://[^\s\"\']+", str(soup))
 
   if len(links) == 0:
-    print("No links on {}".format(url))
+    print(f"No links on {url}")
 
   for link in links:
     print(parseURL(link))

@@ -10,8 +10,8 @@ def get():
 
     try:
         text = r.recognize_google(audio)
-        print("You Said, "+ text)
-    
+        print(f"You Said, {text}")
+
     except Exception as e:
         print(e)
 

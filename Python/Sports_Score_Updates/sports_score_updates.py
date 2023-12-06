@@ -22,7 +22,7 @@ if (len(argumentList) < 2):
 
 if (len(argumentList) == 2):
     sport = argumentList[1].lower()
-    if sport in sports_dict.keys():
+    if sport in sports_dict:
         all_matches = sports.all_matches()[sport]
         for match in all_matches:
             print(match)
@@ -31,7 +31,7 @@ if (len(argumentList) == 2):
 
 if (len(argumentList) == 3):
     sport = argumentList[1].lower()
-    if (sport == 'baseball' or sport == 'basketball' or sport == 'football' or sport == 'hockey'):
+    if sport in ['baseball', 'basketball', 'football', 'hockey']:
         sport = sports_dict.get(sport)
         team = argumentList[2].lower()
         team_info = sports.get_team(sport, team)
@@ -41,7 +41,7 @@ if (len(argumentList) == 3):
 
 if (len(argumentList) == 4):
     sport = argumentList[1].lower()
-    if sport in sports_dict.keys():
+    if sport in sports_dict:
         sport = sports_dict.get(sport)
         team1 = argumentList[2].lower()
         team2 = argumentList[3].lower()

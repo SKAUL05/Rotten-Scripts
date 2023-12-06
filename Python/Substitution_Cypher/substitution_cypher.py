@@ -1,18 +1,14 @@
 import string
 import sys
-all_letters= string.ascii_letters 
-i_a = {}
-for i in range(0, len(all_letters)):
-    i_a[i] = all_letters[i]
-a_i = {}
-for i in range(0, len(all_letters)):
-    a_i[all_letters[i]] = i
+all_letters= string.ascii_letters
+i_a = {i: all_letters[i] for i in range(0, len(all_letters))}
+a_i = {all_letters[i]: i for i in range(0, len(all_letters))}
 
 def encrypt(text, key):
     enc_string = ""
     for i in range(0, len(text)):
         if text[i] == " ":
-            enc_string = enc_string + " "
+            enc_string = f"{enc_string} "
         elif text[i].isupper():
                 enc_string = enc_string + i_a[(a_i[text[i].upper()]+key)%26].upper()
         else:
@@ -23,7 +19,7 @@ def decrypt(enc_text, key):
     dec_string = ""
     for i in range(0, len(enc_text)):
         if enc_text[i] == " ":
-            dec_string = dec_string + " "
+            dec_string = f"{dec_string} "
         elif enc_text[i].isupper():
                 dec_string = dec_string + i_a[abs((a_i[enc_text[i].upper()]-key))%26].upper()
         else:
@@ -43,9 +39,8 @@ if __name__ == "__main__":
             choice = input("Do you want to encrypt or decrypt a text. press 0 for encrypt and 1 for decrypt\n")
             if choice in ['0', '1']:
                 break
-            else:
-                print("Please enter only 0 or 1\n")
-                try_again()
+            print("Please enter only 0 or 1\n")
+            try_again()
         if choice=='0':
             while True:
                 text = input("Please enter a text you want to encrypt\n")
@@ -54,7 +49,7 @@ if __name__ == "__main__":
                     try_again()
                 else:
                     key = int(input("Please enter the key"))
-                    if isinstance(key, int) == False:
+                    if not isinstance(key, int):
                         print("Only integers are allowed for key")
                         try_again()
                     else:
@@ -68,11 +63,11 @@ if __name__ == "__main__":
                     try_again()
                 else:
                     key = int(input("Please enter the key"))
-                    if isinstance(key, int) == False:
+                    if not isinstance(key, int):
                         print("Only integers are allowed for key")
                         try_again()
                     else:
                         print(decrypt(text, key))
                         break
-                    
+
         try_again()

@@ -6,7 +6,7 @@ n = int(input("Enter the number of youtube videos to download:   "))
 links=[]
 print("\nEnter all the links one per line:")
 
-for i in range(0,n):
+for _ in range(0,n):
     temp = input()
     links.append(temp)
 

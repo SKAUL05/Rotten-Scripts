@@ -23,7 +23,7 @@ class s3Bucket:
 
 if __name__ == "__main__":
     date = datetime.datetime.now()
-    current_time = "{}{}{}".format(date.month, date.day, date.year)
-    bucketName = "yourName{}".format(current_time)
+    current_time = f"{date.month}{date.day}{date.year}"
+    bucketName = f"yourName{current_time}"
     obj = s3Bucket(bucketName)
     obj.createS3Bucket()

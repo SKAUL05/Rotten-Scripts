@@ -27,7 +27,7 @@ class MailEngine:
             Logs in into sender's mail account if given valid credentials
         """
         self.senderMail = sender_mail
-        print("Logging in with registered email: {}".format(sender_mail))
+        print(f"Logging in with registered email: {sender_mail}")
         try:
             self.mail.ehlo()
             self.mail.starttls()

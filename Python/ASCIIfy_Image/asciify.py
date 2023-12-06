@@ -74,5 +74,5 @@ def asciify(img_path):
 
 if __name__ == '__main__':
     if len(sys.argv)>1:
-        img_path = str(" ".join(sys.argv[1:]))
+        img_path = " ".join(sys.argv[1:])
     asciify(img_path)

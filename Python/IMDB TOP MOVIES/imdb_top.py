@@ -1,5 +1,6 @@
 """IMDB top 250 movies.
 """
+
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -10,10 +11,10 @@ RESPONSE = requests.get(URL)
 SOUP = BeautifulSoup(RESPONSE.text, features="lxml")
 MOVIES = SOUP.select('td.titleColumn')
 STARS = [a.attrs.get('title') for a in SOUP.select('td.titleColumn a')]
-RATINGS = []
-for b in SOUP.select('td.posterColumn span[name=ir]'):
-    RATINGS.append(round(float(b.attrs.get('data-value')), 1))
-
+RATINGS = [
+    round(float(b.attrs.get('data-value')), 1)
+    for b in SOUP.select('td.posterColumn span[name=ir]')
+]
 IMDB = []
 # Store each item into dictionary (data), then put those into a list (imdb)
 for index in range(0, len(MOVIES)):

@@ -110,10 +110,10 @@ def main():
     dp.add_handler(CommandHandler('proghumor', proghumor))
     dp.add_handler(CommandHandler('template', template))
     dp.add_handler(CommandHandler('markov', markov))
-    
+
     #setting up connection to the server on Heroku
     updater.start_webhook(listen = "0.0.0.0", port = int(PORT) , url_path = TOKEN)
-    updater.bot.setWebhook('Your heroku URL' + TOKEN)
+    updater.bot.setWebhook(f'Your heroku URL{TOKEN}')
     updater.idle()
 
 if __name__ == '__main__':

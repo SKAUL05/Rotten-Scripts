@@ -13,7 +13,7 @@ song = args.song
 
 def get_lyrics(artist, song):
     base_url = 'http://www.azlyrics.com/'
-    song_url = 'http://www.azlyrics.com/lyrics/' + artist + '/' + song + '.html'
+    song_url = f'http://www.azlyrics.com/lyrics/{artist}/{song}.html'
 
     # Use requests library to get html from artist's page
     response = requests.get(song_url)

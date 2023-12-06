@@ -13,7 +13,7 @@ parser.add_argument('-p', "--path", required=True, help="Audio Filename with abs
 args = vars(parser.parse_args())
 
 try:
-    videoClip = editor.VideoFileClip(r"{}".format(args['videoFile']))
-    videoClip.audio.write_audiofile(r"{}".format(args['path']))
+    videoClip = editor.VideoFileClip(f"{args['videoFile']}")
+    videoClip.audio.write_audiofile(f"{args['path']}")
 except Exception:
     print("Something went wrong during the conversion of Video File to Audio.")

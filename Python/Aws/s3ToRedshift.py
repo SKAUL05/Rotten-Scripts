@@ -21,7 +21,7 @@ s3Bucket = args["s3_bucket"]
 s3Object = args["s3_object"]
 
 con = connect(
-    host=redshiftHost + ":" + redshiftPort,
+    host=f"{redshiftHost}:{redshiftPort}",
     database=redshiftDatabase,
     user=redshiftUser,
     password=redshiftPassword,

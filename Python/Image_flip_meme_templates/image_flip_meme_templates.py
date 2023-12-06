@@ -15,7 +15,7 @@ images = [{'name':image['name'],'url':image['url'],'id':image['id']} for image i
 print('Here is the list of available memes : \n')
 ctr = 1
 for img in images:
-    print(str(ctr) + " Template: " + img['name'] + '\n' + "URL: " + img['url'])
+    print(f"{str(ctr)} Template: " + img['name'] + '\n' + "URL: " + img['url'])
     image_url = img['url']
     filename = image_url.split("/")[-1]
     # Open the url image, set stream to True, this will return the stream content.
@@ -25,7 +25,7 @@ for img in images:
     if req.status_code == 200:
     # Set decode_content value to True, otherwise the downloaded image file's size will be zero.
         req.raw.decode_content = True
-            
+
                 # Open a local file with wb ( write binary ) permission.
         with open(filename,'wb') as f:
             shutil.copyfileobj(req.raw, f)

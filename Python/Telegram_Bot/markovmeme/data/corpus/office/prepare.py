@@ -27,7 +27,7 @@ with open("office.json", "w") as filey:
 
 # Dump office lines into files, for all office or individual characters
 with open("../the_office.txt", "w") as filey:
-    for char, sentences in lines.items():
+    for sentences in lines.values():
         for sentence in sentences:
             filey.write("%s\n" % sentence)
 
@@ -35,6 +35,6 @@ with open("../the_office.txt", "w") as filey:
 # Print lines for all characters > 100
 for char, sentences in lines.items():
     if len(sentences) > 100:
-        with open("%s.txt" % char.lower(), "w") as filey:
+        with open(f"{char.lower()}.txt", "w") as filey:
             for sentence in sentences:
                 filey.write("%s\n" % sentence)

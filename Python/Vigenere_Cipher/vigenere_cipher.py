@@ -61,8 +61,8 @@ def vigenere_cipher_dec(key, enc):
     for i in range(0, len(enc)):
         col = alphabets_character_a_i[key[i%den].upper()]-1
         j=0
-        while(vigenere_cipher_table[j][col]!=enc[i].upper()):
-            j=j+1
+        while (vigenere_cipher_table[j][col]!=enc[i].upper()):
+            j += 1
         dec_text = dec_text + alphabets_character_i_a[j+1]
     return dec_text
 
@@ -71,10 +71,10 @@ if __name__ == "__main__":
     if typ == 'e':
         text = input("Please enter the text you want to encode\n")
         key = input("Please enter the key\n")
-        print("Encrypted Text: " + vigenere_cipher_enc(text, key))
+        print(f"Encrypted Text: {vigenere_cipher_enc(text, key)}")
     elif typ == 'd':
         key = input("Please enter the key\n")
         enc = input("Please enter the text you want to decode\n")
-        print("Decrypted Text: " + vigenere_cipher_dec(key, enc))
+        print(f"Decrypted Text: {vigenere_cipher_dec(key, enc)}")
     else:
         print("Sorry you have enter the wrong input. Please try again\n")

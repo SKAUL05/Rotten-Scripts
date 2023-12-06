@@ -24,7 +24,7 @@ with open(json_file, "r") as file_object:
 
 # Extracting the name of the file to make sure the yaml file has the same name
 file_name = json_file.split(".")[0]
-file_in_yaml_format = file_name+".yaml"
+file_in_yaml_format = f"{file_name}.yaml"
 
 # Here the sorted_keys pararmeter is kept false to maintain the order of keys as present in the input json file.
 with open(file_in_yaml_format, 'w') as file_object_2:

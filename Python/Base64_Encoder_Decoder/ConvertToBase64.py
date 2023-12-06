@@ -20,7 +20,7 @@ def ConvertToBase64(string):
     # decoding the string to base64
     print("Want to decode(Y/N):")
     choice = input()
-    if(choice == 'y' or choice == 'Y'):
+    if choice in ['y', 'Y']:
         print("Decoded String:")
 
         # decoding the given string

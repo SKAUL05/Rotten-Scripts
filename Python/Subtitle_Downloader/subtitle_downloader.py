@@ -18,7 +18,6 @@ def main():
     movieName = os.path.join(os.getcwd(), moviePath)
     language = 'en'
     action = 'download'
-    baseURL = 'http://api.thesubdb.com/?'
     hashed = get_hash(movieName)
 
     content = {
@@ -27,14 +26,14 @@ def main():
         'language': language,
     }
 
-    url = baseURL + urllib.urlencode(content)
+    url = f'http://api.thesubdb.com/?{urllib.urlencode(content)}'
     request = urllib.Request(url)
     request.add_header('User-Agent', userAgent)
     response = urllib.urlopen(request)
     subtitles = response.read()
 
     index = movieName.rfind('.')
-    fileName = movieName[0:index] + '.srt'
+    fileName = f'{movieName[:index]}.srt'
     with open(fileName,'w') as f:
         f.write(subtitles)
     print("Subtitle Downloaded!!")

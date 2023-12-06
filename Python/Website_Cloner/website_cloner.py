@@ -31,9 +31,8 @@ html_doc = urllib.request.urlopen(baseurl).read()
 print("Connection Success!")
 try:
     soup = BeautifulSoup(html_doc, 'html.parser')
-    f = open('index.html', 'w+', encoding='utf-8')
-    f.write(str(soup))
-    f.close()
+    with open('index.html', 'w+', encoding='utf-8') as f:
+        f.write(str(soup))
     print("Initializing Index File")
     # Get All Images
     print("Process Initiated")
@@ -82,17 +81,14 @@ try:
             urls = list(cssutils.getUrls(cssutils.parseFile(directory)))
             if "fontawesome" in directory:
                 continue
-            if(len(urls) != 0):
+            if urls:
                 for link in urls:
                     try:
                         if "http" in directory or "https" in link or "data:image/" in link:
                             print("------Skipped for ----- ", link)
                             continue
-                        while("../" in link):
-                            if("assets" in link):
-                                link = link[3:]
-                            else:
-                                link = "assets/"+link[3:]
+                        while ("../" in link):
+                            link = link[3:] if ("assets" in link) else f"assets/{link[3:]}"
                         print('\t\t[+]Getting CSS-Image = '+str(link))
                         if "/" not in link:
                             print("\t\tNo directory. Saving file", link)

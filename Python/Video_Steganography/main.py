@@ -49,10 +49,10 @@ def frame_extraction(video):
 def encode_string(input_string,root="./temp/"):
     split_string_list=split_string(input_string)   # Acquire the splitted string from the message.
     for i in range(0,len(split_string_list)):
-        f_name="{}{}.png".format(root,i)                   
+        f_name = f"{root}{i}.png"
         secret_enc=lsb.hide(f_name,split_string_list[i])   # Embedded the splitted string into each frame.
         secret_enc.save(f_name)                            # Saved the frames after hidding the strings.
-        print("[INFO] frame {} holds {}".format(f_name,lsb.reveal(f_name)))
+        print(f"[INFO] frame {f_name} holds {lsb.reveal(f_name)}")
     print("The message is stored in the Embedded_Video.mp4 file")
 
 
@@ -62,12 +62,12 @@ def decode_string(video):
     secret=[]
     root="./temp/"
     for i in range(len(os.listdir(root))):
-        f_name="{}{}.png".format(root,i)
+        f_name = f"{root}{i}.png"
         secret_dec=lsb.reveal(f_name)         # Revealing the message inside each string
-        if secret_dec == None:
+        if secret_dec is None:
             break
         secret.append(secret_dec)
-    print(''.join([i for i in secret]))
+    print(''.join(list(secret)))
     clean_temp()
 
 # This function would delete the temp directory 

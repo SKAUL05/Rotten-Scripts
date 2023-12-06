@@ -17,22 +17,20 @@ user_data = requests.get(url).json()
 #to retrieve data contained in the url in json format
 
 def repository_names(user):
-    repo_names = []
-    for repo in user.get_repos():
-        repo_names.append(repo)
-    return(repo_names)
+    return list(user.get_repos())
 #fetching the names of all the repositories
 
 def repository_details(user):
     all_repo_details = []
     repo_names = repository_names(user)
     for repo in repo_names:
-        repo_details = {}
-        repo_details['Name'] = repo.full_name.split('/')[1]
-        repo_details['Description'] = repo.description
-        repo_details['Created on'] = repo.created_at
-        repo_details['Programming language'] = repo.language
-        repo_details['Forked'] = str(repo.forks) + " time(s)"
+        repo_details = {
+            'Name': repo.full_name.split('/')[1],
+            'Description': repo.description,
+            'Created on': repo.created_at,
+            'Programming language': repo.language,
+            'Forked': f"{str(repo.forks)} time(s)",
+        }
         all_repo_details.append(repo_details)
     return(all_repo_details)
 #fetching the details of all the repositories

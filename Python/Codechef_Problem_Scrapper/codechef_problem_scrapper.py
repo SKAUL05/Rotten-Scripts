@@ -34,15 +34,9 @@ page_source = driver.page_source
 #Soup object to conduct scraping on
 soup = BeautifulSoup(page_source, 'html.parser')
 
-#List to store the content of the page source
-content = []
-
 #Getting the required content
 problem_content = soup.find_all('div', class_='mathjax-support')
-for problem in problem_content:
-
-    content.append(problem.get_text())
-
+content = [problem.get_text() for problem in problem_content]
 #Removing unnecessary stuff and adding description text
 content = ["Description" + "\n"] + content[:-2]
 
@@ -50,14 +44,10 @@ content = ["Description" + "\n"] + content[:-2]
 #Custom name for the file
 file_name= soup.title.text.split("|")[0].strip()
 
-#Text file to write our content
-file1 = open(file_name+".txt","w", encoding='utf-8')
-
-#Logic to write the content on the file 
-for cont in content:
-    file1.write(cont) 
-file1.close() 
-
+with open(f"{file_name}.txt", "w", encoding='utf-8') as file1:
+    #Logic to write the content on the file 
+    for cont in content:
+        file1.write(cont)
 print("Your problem statement has been created successfully")
 
 

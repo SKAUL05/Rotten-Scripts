@@ -15,25 +15,16 @@ from PIL.ExifTags import TAGS
 
 #Enter your Image here
 image_file = 'image.jpg'   # This image is copyrighted under © 2010 Hartswood Films.
-                         
+
 # on execution an object of Image type is returned and stored in image_file variable.
 
 try:
     image = Image.open(image_file)
 except IOError:
     pass
-# raise an IOError if file cannot be found,or the image cannot be opened.
-
-# dictionary to store metadata keys and value pairs.
-exif = {}
-
-# iterating over the dictionary 
-for tag, value in image._getexif().items():
-
-#extarcting all the metadata as key and value pairs and converting them from numerical value to string values
-    if tag in TAGS:
-        exif[TAGS[tag]] = value
-
+exif = {
+    TAGS[tag]: value for tag, value in image._getexif().items() if tag in TAGS
+}
 #checking if image is copyrighted      
 try:
     if 'Copyright' in exif:
