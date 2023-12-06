@@ -14,17 +14,12 @@ original_url = input("Enter the webpage url: ")
 # a queue of URLs to be scraped
 unprocessed_urls = deque([original_url])
 
-# set of already crawled urls.
-processed_urls = set()
-
 # a set of fetched emails to save fetched emails
 emails = set()
 
 # moving unsraped_url from the queue to scraped_urls set
 url = unprocessed_urls.popleft()
-# Remove and return an element from the left side of the deque.
-processed_urls.add(url)
-
+processed_urls = {url}
 # extracting base url to resolve relative links,i.e extract different parts of the url.
 parts = urlsplit(url)
 
@@ -61,7 +56,7 @@ for anchor in soup.find_all("a"):
         link = path + link
 
     # add the new url to the queue if it was not in unprocessed list nor in processed list yet
-    if not link in unprocessed_urls and not link in processed_urls:
+    if link not in unprocessed_urls and link not in processed_urls:
         unprocessed_urls.append(link)
 
 # End of the script.

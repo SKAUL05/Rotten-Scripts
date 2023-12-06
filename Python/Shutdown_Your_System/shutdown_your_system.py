@@ -17,7 +17,7 @@ def cancel():
 def shutdown():
     t = int(input('how long to shut down the computer:\n'))
     t = str(t * 60)
-    cmd = 'shutdown -s -f -t ' + (t)
+    cmd = f'shutdown -s -f -t {t}'
     comando(cmd)
 
 def command(cmd):

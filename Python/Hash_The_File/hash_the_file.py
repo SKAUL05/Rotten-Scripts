@@ -61,9 +61,7 @@ if len(filenames) == 0:
   exit(1)
 
 for filename in filenames:
-  fd = open(filename, "r")
-  content = fd.read()
-  m = hsh(str.encode(content))
-  print(m.hexdigest() + "  " + filename)
-
-  fd.close()
+  with open(filename, "r") as fd:
+    content = fd.read()
+    m = hsh(str.encode(content))
+    print(f"{m.hexdigest()}  {filename}")

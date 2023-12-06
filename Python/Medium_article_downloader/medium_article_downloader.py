@@ -5,32 +5,27 @@
 import requests
 from bs4 import BeautifulSoup
 
-#The content is written into a text file
+with open("Medium_article_content.txt", "w") as file:
+  #The URL of the article is entered here
+  page_url = input("Enter the URL of the Medium Article ")
 
-file = open("Medium_article_content.txt", "w")
+  #Based on the response got from the URL, the content is loaded into response
 
-#The URL of the article is entered here
-page_url = input("Enter the URL of the Medium Article ")
+  response = requests.get(page_url)
 
-#Based on the response got from the URL, the content is loaded into response
+  #Beautiful soup is a library used for web scraping and parsing the contents of a web page
+  #Here a html parser is used to parse through the content embedded in the html tags
 
-response = requests.get(page_url)
+  soup = BeautifulSoup(response.text,"html.parser")
 
-#Beautiful soup is a library used for web scraping and parsing the contents of a web page
-#Here a html parser is used to parse through the content embedded in the html tags
+  #The content of the article is stored in the <article> tag
 
-soup = BeautifulSoup(response.text,"html.parser")
+  for line in soup.find('article').find('div'):
 
-#The content of the article is stored in the <article> tag
+    #All the content is essentially stored between <p> tags
 
-for line in soup.find('article').find('div'):
-  
-  #All the content is essentially stored between <p> tags
-  
-  for content in line.find_all('p'):
+    for content in line.find_all('p'):
 
-    #contents are written into a file
-    
-    file.write(content.text + '\n')
+      #contents are written into a file
 
-file.close()
+      file.write(content.text + '\n')

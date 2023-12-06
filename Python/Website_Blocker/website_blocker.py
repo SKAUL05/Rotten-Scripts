@@ -21,14 +21,10 @@ while True:
         with open(host_path,"r+") as file:
             file_text = file.read()
             for site in website_list:
-                if site in file_text:
-                    pass
-                else:
+                if site not in file_text:
                     #Adds list of websites to be blocked in the host file
-                    file.write(redirect + " " + site + "\n")
+                    file.write(f"{redirect} {site}" + "\n")
         print("All sites are BLOCKED. Go and WORK!")
-        break
-    #When end_date < start_date, the website unblocks
     else:
         #Condition to remove the list of websites from the hosts file
         with open(host_path, "r+") as file:
@@ -36,9 +32,10 @@ while True:
             #Bring pointer to the start
             file.seek(0)
             for line in content:
-                if not any(site in line for site in website_list):
+                if all(site not in line for site in website_list):
                     file.write(line)
             #Deletion of file contents from current point to downward
             file.truncate()
         print("All sites are unblocked. Yay! Time to have fun.")
-        break
+
+    break

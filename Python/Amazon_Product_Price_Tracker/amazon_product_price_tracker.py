@@ -37,34 +37,33 @@ def currency_used(URL):
 
 def price_check(URL, budget):
     
-    headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0'} 
+    headers = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0'}
     feasible = False
     response = requests.get(URL, headers=headers)
     soup = BeautifulSoup(response.content, "html.parser")
-    currency_symbols = {'€' : "Euro", '£' : "Pound", '$' : "Dollars", "¥" : "Renminbi", "HK$" : "Hong Kong Dollars", "₹" : "Rupeees"} 
+    currency_symbols = {'€' : "Euro", '£' : "Pound", '$' : "Dollars", "¥" : "Renminbi", "HK$" : "Hong Kong Dollars", "₹" : "Rupeees"}
     price = soup.find(id="priceblock_ourprice").get_text()
     currency = ""
-    
+
     for symbol in currency_symbols:
         if symbol in price:
             currency = currency_symbols[symbol]
             price = price.replace(symbol, "")
-    
+
     #string is converted to a number and extra characters are removed
-    
+
     if "," in price:
         price = price.replace(",", "")
-    
+
     #The price for some products is expressed as a range, thus the following is performed
     price = price = price.split("-")
     price_now = []
     if len(price) == 2:
-            lower, upper = float(price[0].strip('\xa0')) , float(price[1].strip('\xa0'))
-            price_now.append(lower)
-            price_now.append(upper)
-            price_range = [*(range(int(lower), int(upper+1)))]
-            if budget in price_range:
-                feasible = True
+        lower, upper = float(price[0].strip('\xa0')) , float(price[1].strip('\xa0'))
+        price_now.extend((lower, upper))
+        price_range = [*(range(int(lower), int(upper+1)))]
+        if budget in price_range:
+            feasible = True
     else:
         price = float(price[0].strip("\xa0"))
         if budget >= int(price):
@@ -75,7 +74,7 @@ def price_check(URL, budget):
 #Enter the URL of the amazon product
 URL = input("Enter the URL of the Amazon product : ")
 
-print("The price of the product is expressed in " + (currency_used(URL)))
+print(f"The price of the product is expressed in {currency_used(URL)}")
 
 #Enter your budget in the same currency as mentioned above
 budget = int(input("Enter your budget for the product in same unit of currency as mentioned above: "))
@@ -94,19 +93,19 @@ feasible, price_range = price_check(URL, budget)
 #The price_check function will execute every 12 hours to check, the prices will also be logged so that a comparison can be made
 while not feasible:
     feasible, price_range = price_check(URL, budget)
-    
+
     if len(price_range) == 1: 
-        cost = "The cost of the product is  " + str(price_range[0])
+        cost = f"The cost of the product is  {str(price_range[0])}"
     else:
-        cost = "The cost of the product is within the range " + str(price_range[0]) + " and " + str(price_range[1])
-    
+        cost = f"The cost of the product is within the range {str(price_range[0])} and {str(price_range[1])}"
+
     current_time = datetime.datetime.now()  
-    
+
     #Logging records into the text file.
     with open("price_logger.txt" , "w") as file:
-        file.write(cost + " at " + str(current_time))
+        file.write(f"{cost} at {str(current_time)}")
         file.write("\n")
-    
+
     if feasible:
         break
     else:

@@ -32,11 +32,8 @@ def convert_image_to_pdf(path):
     print("Success!!")
 
 if __name__ == "__main__":
-    if len(sys.argv)>1:         #Get the url of the site from where you want to download
-        url = " ".join(sys.argv[1:])
-    else:
-        url = input('Enter the URL: ')
+    url = " ".join(sys.argv[1:]) if len(sys.argv)>1 else input('Enter the URL: ')
     if not url.startswith(('http://', 'https://')):
-        url = 'https://' + url
+        url = f'https://{url}'
     get_html(url)
     os.remove('image.png')

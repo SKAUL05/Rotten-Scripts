@@ -18,7 +18,7 @@ def Parsefeed():
     # parsing news data from the feed URL
     f = feedparser.parse("http://timesofindia.indiatimes.com/rssfeedstopstories.cms")
     # set any icon for the notification
-    ICON_PATH = os.getcwd() + "/icon.ico"
+    ICON_PATH = f"{os.getcwd()}/icon.ico"
     # initalize the notify2 using init method and initializing the D-bus connection
     notify2.init('News Notify')
 
@@ -35,7 +35,7 @@ def Parsefeed():
         n.set_urgency(notify2.URGENCY_NORMAL)
         # show notification on screen
         n.show()
-        
+
         # set timeout for a notification
         n.set_timeout(100)
         # short delay between notifications     

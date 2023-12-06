@@ -21,8 +21,7 @@ def xml_to_csv(path):
                      )
             xml_list.append(value)
     column_name = ['filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax']
-    xml_df = pd.DataFrame(xml_list, columns=column_name)
-    return xml_df
+    return pd.DataFrame(xml_list, columns=column_name)
 
 
 def main():

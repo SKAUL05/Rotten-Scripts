@@ -57,8 +57,7 @@ def convolute(arr , height , width ,kernel):
             prod = np.multiply(temp,kernel)
             convoluted_matrix.append(np.sum(prod))
 
-      convoluted_matrix = (np.array(convoluted_matrix).reshape(height-3,width-3))
-      return(convoluted_matrix)
+      return (np.array(convoluted_matrix).reshape(height-3,width-3))
 
 r_convol = convolute(r, height, width, r_kernel)
 g_convol = convolute(g, height, width, g_kernel)

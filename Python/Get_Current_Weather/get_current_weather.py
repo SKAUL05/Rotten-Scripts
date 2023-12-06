@@ -13,10 +13,10 @@ argumentList = sys.argv
 if (len(argumentList) < 3):
     print("Please enter the city name and units format")
     exit()
-  
+
 # base_url variable to store url
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
-  
+
 # take input(city name) from user
 city_name = argumentList[1]
 
@@ -36,8 +36,8 @@ else:
     print("All the units are in Metrics.")
 
 # complete url address
-complete_url = base_url + "appid=" + api_key + "&q=" + city_name + units
-  
+complete_url = f"{base_url}appid={api_key}&q={city_name}{units}"
+
 # get method returns the response object
 response = requests.get(complete_url)
 

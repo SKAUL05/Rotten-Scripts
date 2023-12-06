@@ -22,7 +22,7 @@ subject = input("Enter the subject of the email : ")
 #"Content of the email"
 body_of_the_email = input("Enter the content of the email : ")
 
-content = "Subject: {}\n\n{}".format(subject, body_of_the_email)
+content = f"Subject: {subject}\n\n{body_of_the_email}"
 
 #Specifications of the Email
 

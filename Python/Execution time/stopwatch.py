@@ -10,16 +10,12 @@ class Stopwatch:
     state = 'Stopped'
 
     def __init__(self, precision=None):
-        if precision:
-            self.__precision__ = precision
-        else:
-            # Default to tenths of a second.
-            self.__precision__ = 1
+        self.__precision__ = precision if precision else 1
         return
     
     def start(self):
         # Start the stopwatch.
-        if not self.state == 'Stopped':
+        if self.state != 'Stopped':
             print('Stopwatch is already running.')
             return
         else:
@@ -57,22 +53,26 @@ class Stopwatch:
     def __update__(self):
         # Internal function to update stopwatch summary.
         now = time.time()
-            
-        lapCounter = 1
+
         lapTime = 0
         lapSummary = ''
-        for lap in self.laps:
+        for lapCounter, lap in enumerate(self.laps, start=1):
             # Tally the laps into the total laptime.
             lapTime = round(lapTime + lap, self.__precision__)
             # Generate a pretty summary.
             lapSummary += '\nLap ' + str(lapCounter) + ': ' + \
-                str(datetime.timedelta(seconds=round(lap, self.__precision__))).rjust(14 - len(str(lapCounter)))
-            lapCounter += 1
-            
-        if not self.state == 'Stopped':
+                    str(datetime.timedelta(seconds=round(lap, self.__precision__))).rjust(14 - len(str(lapCounter)))
+        if self.state != 'Stopped':
             self.__currentLap__ += (now - self.__startTime__)
-            
+
         totalTime = lapTime + self.__currentLap__
-        self.summary = 'Total time: ' + str(datetime.timedelta(seconds=round(totalTime, self.__precision__))).rjust(8) + lapSummary \
-            + '\nCurrent Lap: ' + str(datetime.timedelta(seconds=round(self.__currentLap__, self.__precision__))).rjust(7)
+        self.summary = (
+            f'Total time: {str(datetime.timedelta(seconds=round(totalTime, self.__precision__))).rjust(8)}{lapSummary}'
+            + '\nCurrent Lap: '
+            + str(
+                datetime.timedelta(
+                    seconds=round(self.__currentLap__, self.__precision__)
+                )
+            ).rjust(7)
+        )
         return

@@ -23,13 +23,13 @@ class Currency_convertor:
     # function to do a simple cross multiplication between  
     # the amount and the conversion rates 
     def convert(self, from_currency, to_currency, amount): 
-        initial_amount = amount 
+        initial_amount = amount
         if from_currency != 'EUR' : 
             amount = amount / self.rates[from_currency] 
-  
+
         # limiting the precision to 2 decimal places 
-        amount = round(amount * self.rates[to_currency], 2) 
-        print('{} {} = {} {}'.format(initial_amount, from_currency, amount, to_currency)) 
+        amount = round(amount * self.rates[to_currency], 2)
+        print(f'{initial_amount} {from_currency} = {amount} {to_currency}') 
   
 # Driver code 
 if __name__ == "__main__": 

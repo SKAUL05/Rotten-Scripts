@@ -15,13 +15,13 @@ if (not location and (not country)):
     print("Please enter either location or the country code")
     exit()
 
-if (country):
+if country:
     code = country_timezones(country)
     timezone = pytz.timezone(code[0])
     datetimeFinder = datetime.now(timezone)
-    print("Time in " + str(timezone) + ": " + datetimeFinder.strftime("%H:%M:%S"))
+    print(f"Time in {str(timezone)}: " + datetimeFinder.strftime("%H:%M:%S"))
 
-if (location):
+if location:
     timezone = pytz.timezone(location)
     datetimeFinder = datetime.now(timezone)
-    print("Time in " + location + ": " + datetimeFinder.strftime("%H:%M:%S"))
+    print(f"Time in {location}: " + datetimeFinder.strftime("%H:%M:%S"))

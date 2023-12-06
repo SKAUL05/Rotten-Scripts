@@ -25,34 +25,39 @@ def encode(img):
     len_secret_text_binary = len(secret_text_binary)
 
     imdata = iter(img.getdata())
-    changed_pixels = list()
+    changed_pixels = []
 
     for i in range(len_secret_text_binary):
-        pixels = [value for value in imdata.__next__()[:3] +
-                                     imdata.__next__()[:3] +
-                                     imdata.__next__()[:3]]
+        pixels = list(
+            imdata.__next__()[:3]
+            + imdata.__next__()[:3]
+            + imdata.__next__()[:3]
+        )
 
         letter = secret_text_binary[i]
 
         for j in range(len(letter)+1):
-            if j == 8:
-                if i == len_secret_text_binary-1:
-                    if pixels[j]%2 == 0:
-                        pixels[j] += 1
-                else:
-                    if pixels[j]%2 != 0:
-                        pixels[j] -= 1
-            elif int(letter[j]) == 0:
-                if pixels[j]%2 != 0:
-                    pixels[j] -= 1
-            elif int(letter[j]) == 1:
-                if pixels[j]%2 == 0:
-                    pixels[j] += 1
-
-        changed_pixels.append(tuple(pixels[0:3]))
-        changed_pixels.append(tuple(pixels[3:6]))
-        changed_pixels.append(tuple(pixels[6:9]))
-
+            if (
+                j == 8
+                and i == len_secret_text_binary - 1
+                and pixels[j] % 2 == 0
+                or j != 8
+                and int(letter[j]) != 0
+                and int(letter[j]) == 1
+                and pixels[j] % 2 == 0
+            ):
+                pixels[j] += 1
+            elif (
+                (j != 8 or i != len_secret_text_binary - 1)
+                and (j != 8 or pixels[j] % 2 != 0)
+                and (j == 8 or int(letter[j]) != 0 or pixels[j] % 2 != 0)
+                and (j == 8 or int(letter[j]) == 0 or int(letter[j]) != 1)
+                and (j == 8 or int(letter[j]) == 0)
+            ):
+                pixels[j] -= 1
+        changed_pixels.extend(
+            (tuple(pixels[:3]), tuple(pixels[3:6]), tuple(pixels[6:9]))
+        )
     width = img.size[0]
     (x,y) = (0,0)
     for pix in changed_pixels:
@@ -75,17 +80,13 @@ def decode(image):
     message = ""
     imgdata = iter(image.getdata())
 
-    while (True):
-        pixels = [value for value in imgdata.__next__()[:3] +
-                                     imgdata.__next__()[:3] +
-                                     imgdata.__next__()[:3]]
-        binstr = ''
-        for i in pixels[:8]:
-            if (i % 2 == 0):
-                binstr += '0'
-            else:
-                binstr += '1'
-
+    while True:
+        pixels = list(
+            imgdata.__next__()[:3]
+            + imgdata.__next__()[:3]
+            + imgdata.__next__()[:3]
+        )
+        binstr = ''.join('0' if (i % 2 == 0) else '1' for i in pixels[:8])
         message += chr(int(binstr, 2))
         if (pixels[-1] % 2 != 0):
             print(message)

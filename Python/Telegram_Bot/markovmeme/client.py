@@ -108,7 +108,7 @@ def main():
         # If the provided font doesn't end in ttf
         font = args.font
         if not args.font.endswith(".ttf"):
-            font = "%s.ttf" % (font)
+            font = f"{font}.ttf"
 
         # Determine if we have a corpus or custom corpus
         corpus = args.corpus

@@ -45,9 +45,7 @@ class MemeImage:
             return corpus
 
         options = list_corpus()
-        if corpus in options:
-            return corpus
-        return random.choice(corpus)
+        return corpus if corpus in options else random.choice(corpus)
 
     def get_image(self, image, corpus):
         """If the image is provided, the full path must exist. Otherwise,
@@ -62,13 +60,13 @@ class MemeImage:
         # Otherwise, filter to subset in corpus
         options = [x for x in list_images() if corpus in x]
         if not options:
-            sys.exit("No images exist for corpus %s. Please specify --image." % corpus)
+            sys.exit(f"No images exist for corpus {corpus}. Please specify --image.")
 
         choice = random.choice(options)
-        return os.path.join(here, "data", "images", "%s.png" % choice)
+        return os.path.join(here, "data", "images", f"{choice}.png")
 
     def __str__(self):
-        return "[mememl][%s]" % (self.corpus)
+        return f"[mememl][{self.corpus}]"
 
     def __repr__(self):
         return self.__str__()
@@ -254,8 +252,8 @@ class MemeImage:
            text to it.
         """
         if not outfile:
-            outfile = "%s.png" % self.generate_name()
-        print("Saving image to %s" % outfile)
+            outfile = f"{self.generate_name()}.png"
+        print(f"Saving image to {outfile}")
         self.image.save(outfile, "PNG")
 
     def generate_name(self):

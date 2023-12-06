@@ -2,9 +2,7 @@ import os, sys, time
 
 # Installation of AWS CLI
 install_aws_cli = 'pip install awscli'
-status = os.system(install_aws_cli)
-
-if(status):
+if status := os.system(install_aws_cli):
     sys.exit('\nError in AWS CLI installation :(\n')
 print('''\n!! AWS CLI successfully installed !!\n
 Get your access keys from IAM Console to configure AWS CLI
@@ -18,9 +16,7 @@ time.sleep(10)
 
 # Configuration of AWS CLI
 configure_aws = 'aws configure'
-status = os.system(configure_aws)
-
-if(status):
+if status := os.system(configure_aws):
     sys.exit('\nError in AWS Configuration :(\n')
 print('\n!! AWS successfully configured !!\n')
 
@@ -33,9 +29,7 @@ download_location = input('''Enter location to store downloaded files using
 format. Example - ~/Pictures/work/python\n''')
 
 download_bucket = 'aws s3 sync '.join(bucket_location).join(' ').join(download_location)
-status = os.system(download_bucket)
-
-if(status):
+if status := os.system(download_bucket):
     sys.exit('''\nError in downloading s3 bucket :(
         please provide correct locations\n''')
 print('\ns3 bucket successfully downloaded to your desired location\n')

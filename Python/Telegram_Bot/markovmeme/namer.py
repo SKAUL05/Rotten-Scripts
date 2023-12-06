@@ -210,10 +210,7 @@ class RobotNamer:
             ==========
             should be a list of things to select from
         """
-        if len(select_from) <= 0:
-            return ""
-
-        return choice(select_from)
+        return "" if len(select_from) <= 0 else choice(select_from)
 
 
 def main():

@@ -13,14 +13,14 @@ def send_confirmation(sender_email, receiver_email, password, price_range):
     subject = "Amazon product price "
 
     if len(price_range) == 1: 
-        cost = "The cost of the product is" + str(price_range[0])
+        cost = f"The cost of the product is{str(price_range[0])}"
     else:
-        cost = "The cost of the product is within the range " + str(price_range[0]) + " and " + str(price_range[1])
+        cost = f"The cost of the product is within the range {str(price_range[0])} and {str(price_range[1])}"
 
     #Content of the email
-    body_of_the_email = "Hello, This is to inform you that the price of the product you were looking for on Amazon is well-within your budget." + cost + " You can buy it right away."
+    body_of_the_email = f"Hello, This is to inform you that the price of the product you were looking for on Amazon is well-within your budget.{cost} You can buy it right away."
 
-    content = "Subject: {}\n\n{}".format(subject, body_of_the_email)
+    content = f"Subject: {subject}\n\n{body_of_the_email}"
 
     #Specifications of the Email
 

@@ -8,13 +8,13 @@ import cv2
 # in VideoWriter is the video file name, fourcc code, fps and dimensions
 # video.write() writes all the images into the video.
 def convert_frames_to_video(img_folder_path, fps):
-    images = [img for img in os.listdir(img_folder_path)]
+    images = list(os.listdir(img_folder_path))
     frame = cv2.imread(os.path.join(img_folder_path, images[0]))
     height, width, layers = frame.shape
 
     video_name = input('Enter the video name(just the filename): ')
     if not video_name.endswith('.avi'):
-        video_name = video_name + '.avi'
+        video_name = f'{video_name}.avi'
     video = cv2.VideoWriter(video_name, 0, fps, (width, height))  #fourcc code = 0 gives no warning with files other than .avi
 
     for image in images:
@@ -25,6 +25,6 @@ def convert_frames_to_video(img_folder_path, fps):
 
 if __name__ == "__main__":
     if len(sys.argv)>1:
-        img_folder_path = str(" ".join(sys.argv[1:]))
+        img_folder_path = " ".join(sys.argv[1:])
     fps = int(input('Enter the fps needed: '))
     convert_frames_to_video(img_folder_path, fps)

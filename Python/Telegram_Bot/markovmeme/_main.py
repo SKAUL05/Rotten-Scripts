@@ -45,9 +45,7 @@ class MemeImage:
             return corpus
 
         options = list_corpus()
-        if corpus in options:
-            return corpus
-        return random.choice(corpus)
+        return corpus if corpus in options else random.choice(corpus)
 
     def get_image(self, image, corpus):
         """If the image is provided, the full path must exist. Otherwise,
@@ -62,13 +60,13 @@ class MemeImage:
         # Otherwise, filter to subset in corpus
         options = [x for x in list_images() if corpus in x]
         if not options:
-            sys.exit("No images exist for corpus %s. Please specify --image." % corpus)
+            sys.exit(f"No images exist for corpus {corpus}. Please specify --image.")
 
         choice = random.choice(options)
-        return os.path.join(here, "data", "images", "%s.png" % choice)
+        return os.path.join(here, "data", "images", f"{choice}.png")
 
     def __str__(self):
-        return "[mememl][%s]" % (self.corpus)
+        return f"[mememl][{self.corpus}]"
 
     def __repr__(self):
         return self.__str__()
@@ -90,40 +88,38 @@ class MemeImage:
         """Given a text string, font size, and output coordinates, write text
            onto the image. The default font provided with the package 
         """
-        if text not in [None, ""]:
+        if text in [None, ""]:
+            return
+        # Break image into width and height
+        width, height = self.image.size
+        fontfile = get_font(font)
+        font = ImageFont.truetype(fontfile, fontsize)
 
-            # Break image into width and height
-            width, height = self.image.size
-            fontfile = get_font(font)
-            font = ImageFont.truetype(fontfile, fontsize)
+        # How much space do we need for all of text?
+        expect_width, expect_height = self.draw.textsize(text, font)
 
-            # How much space do we need for all of text?
-            expect_width, expect_height = self.draw.textsize(text, font)
+        lineCount = (
+            int(round((expect_width / width) + 1)) if expect_width > width else 1
+        )
+        # Split text into <lineCount> lines
+        lines = self.text2lines(text, lineCount, font)
 
-            # Do we need multiple lines?
-            lineCount = 1
-            if expect_width > width:
-                lineCount = int(round((expect_width / width) + 1))
+        # Draw each line on the image
+        for i in range(0, lineCount):
+            w, h = self.draw.textsize(lines[i], font)
 
-            # Split text into <lineCount> lines
-            lines = self.text2lines(text, lineCount, font)
+            # We want the text to be centered
+            xcoord = width / 2 - w / 2
+            ycoord = i * h
 
-            # Draw each line on the image
-            for i in range(0, lineCount):
-                w, h = self.draw.textsize(lines[i], font)
+            # Black outline
+            self.draw.text((xcoord - 2, ycoord - 2), lines[i], (0, 0, 0), font=font)
+            self.draw.text((xcoord + 2, ycoord - 2), lines[i], (0, 0, 0), font=font)
+            self.draw.text((xcoord + 2, ycoord + 2), lines[i], (0, 0, 0), font=font)
+            self.draw.text((xcoord - 2, ycoord + 2), lines[i], (0, 0, 0), font=font)
 
-                # We want the text to be centered
-                xcoord = width / 2 - w / 2
-                ycoord = i * h
-
-                # Black outline
-                self.draw.text((xcoord - 2, ycoord - 2), lines[i], (0, 0, 0), font=font)
-                self.draw.text((xcoord + 2, ycoord - 2), lines[i], (0, 0, 0), font=font)
-                self.draw.text((xcoord + 2, ycoord + 2), lines[i], (0, 0, 0), font=font)
-                self.draw.text((xcoord - 2, ycoord + 2), lines[i], (0, 0, 0), font=font)
-
-                # Main text
-                self.draw.text((xcoord, ycoord), lines[i], font=font, fill=rgb)
+            # Main text
+            self.draw.text((xcoord, ycoord), lines[i], font=font, fill=rgb)
 
     def text2lines(self, text, lineCount, font):
         """given a linecount, split text into lines. We minimally return one 
@@ -230,8 +226,8 @@ class MemeImage:
            text to it.
         """
         if not outfile:
-            outfile = "%s.png" % self.generate_name()
-        print("Saving image to %s" % outfile)
+            outfile = f"{self.generate_name()}.png"
+        print(f"Saving image to {outfile}")
         self.image.save(outfile, "PNG")
 
     def generate_name(self):

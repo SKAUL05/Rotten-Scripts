@@ -15,7 +15,7 @@ def insult():
             subject.append(split_line[0])
             predicate.append(split_line[1])
             verb.append(split_line[2])
-    return("Thou art a " + random.choice(subject) + " " + random.choice(predicate) + " " + random.choice(predicate))
+    return f"Thou art a {random.choice(subject)} {random.choice(predicate)} {random.choice(predicate)}"
 
 if __name__ == "__main__":
 

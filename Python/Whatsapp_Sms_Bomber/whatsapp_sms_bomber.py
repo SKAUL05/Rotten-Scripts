@@ -38,7 +38,7 @@ driver.maximize_window()
 time.sleep(10)
 
 #If the user chooses ALL then the message will be sent to all the contacts added in mycontacts.py
-if("ALL" in contact_name):
+if ("ALL" in contact_name):
     for contact in mycontacts.my_contacts:
 
         #locating the chat icon using xpath
@@ -51,11 +51,11 @@ if("ALL" in contact_name):
         time.sleep(1)
 
         #Checking whether the contact exist or not
-        if(checkuser("//span[@title='{}']".format(contact)) == False):
+        if checkuser(f"//span[@title='{contact}']") == False:
             continue
 
         #Searching the contact and clicking on it
-        find_user =driver.find_element_by_xpath("//span[@title='{}']".format(contact))
+        find_user = driver.find_element_by_xpath(f"//span[@title='{contact}']")
         find_user.click()
         time.sleep(1)
 
@@ -65,12 +65,11 @@ if("ALL" in contact_name):
         time.sleep(1)
 
         #Sending the messages on the basis of count given by the user
-        for i in range(count_message):
+        for _ in range(count_message):
             find_message.send_keys(message)
             driver.find_element_by_xpath(xpath.sendbutton_xpath).click()
             time.sleep(0.5)
         time.sleep(1)
-#Else the messages will be sent to the users mentioned in the input
 else:
     for contact in contact_name:
         chat=driver.find_element_by_xpath(xpath.newchat_xpath)
@@ -80,10 +79,10 @@ else:
         search.send_keys(contact)
         time.sleep(1)
 
-        if(checkuser("//span[@title='{}']".format(contact)) == False):
+        if checkuser(f"//span[@title='{contact}']") == False:
             continue
 
-        find_user =driver.find_element_by_xpath("//span[@title='{}']".format(contact))
+        find_user = driver.find_element_by_xpath(f"//span[@title='{contact}']")
         find_user.click()
         time.sleep(1)
 
@@ -91,7 +90,7 @@ else:
         find_message.click()
         time.sleep(1)
 
-        for i in range(count_message):
+        for _ in range(count_message):
             find_message.send_keys(message)
             driver.find_element_by_xpath(xpath.sendbutton_xpath).click()
             time.sleep(0.5)

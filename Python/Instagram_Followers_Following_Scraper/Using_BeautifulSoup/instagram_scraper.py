@@ -8,15 +8,14 @@ import requests
 URL="https://www.instagram.com/{}/"
 
 def parse_data(meta_content):
-    data = {}
-
     #The content received needs to parsed through
     meta_content = meta_content.split("-")[0]
     meta_content = meta_content.split(" ")
-    data['Followers'] = meta_content[0]
-    data['Following'] = meta_content[2]
-    data['Posts'] = meta_content[4]
-    return data
+    return {
+        'Followers': meta_content[0],
+        'Following': meta_content[2],
+        'Posts': meta_content[4],
+    }
 
 #Using BeautifulSoup, web-scarping is performed
 

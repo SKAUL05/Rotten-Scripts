@@ -25,8 +25,8 @@ def register(mail_id,password):
         print("Improper credentials given...")
     else:
         with open(path_to_credentials,'w') as f:
-            f.write("{} {}".format(mail_id,password))
-        print("Mail id registered successfully for '{}'".format(mail_id))
+            f.write(f"{mail_id} {password}")
+        print(f"Mail id registered successfully for '{mail_id}'")
 
 
 
@@ -40,7 +40,7 @@ def load_credentials():
     mail_id = data.split(' ')[0]
     mail_pwd = data.split(' ')[1]
     print("Loaded registered credentials correctly.....")
-    print("Registered email: {}".format(mail_id))
+    print(f"Registered email: {mail_id}")
     return mail_id,mail_pwd
 
 """Load CSV:
@@ -49,11 +49,7 @@ def load_credentials():
 """
 def loadCSV(path):
     data = pd.read_csv(path)
-    emails = []
-
-    for email in data['Email']:
-        emails.append(email)
-    return emails
+    return list(data['Email'])
 
 
 """Send Mail:
@@ -140,12 +136,12 @@ def renderHTML(Subject,senderMail,senderPassword,reciever_email_list,body_msg):
         mail.login(senderMail,senderPassword)
 
         print("------+------+-------+-------+------+------+------+------+------+------")
-        print("                       Mails To be sent ({})".format(count))
+        print(f"                       Mails To be sent ({count})")
         print("------+------+-------+-------+------+------+------+------+------+------")
 
         ## Loop to Send Emails One-By-One
         for i in range(count):
-            print('\n[Mail]({}) Sending to : {}'.format(i+1,reciever_email_list[i]))
+            print(f'\n[Mail]({i + 1}) Sending to : {reciever_email_list[i]}')
 
             ## Initialize
             SUBJECT = Subject
@@ -160,7 +156,7 @@ def renderHTML(Subject,senderMail,senderPassword,reciever_email_list,body_msg):
 
             # ## Send Mail
             mail.send(Subject=SUBJECT,Sender= SENDER,Reciever=RECIEVER)
-        
+
         ## Exit MassMail Engine
         mail.quitEngine()
 
@@ -169,14 +165,14 @@ def renderHTML(Subject,senderMail,senderPassword,reciever_email_list,body_msg):
         print("                     All Mails sent successfully")
         print("-----+------+------+------+------+------+------+------+------+------+------")
         exit()
-            
+
 
     except Exception as e:
         print("\n-----+------+------+------+------+------+------+------+------+------+------")
         print("                               Error")
         print("-----+------+------+------+------+------+------+------+------+------+------")
         print("Oops!!! An error ocurred....Couldn't send mails")
-        print("Error: {}".format(e))
+        print(f"Error: {e}")
         time.sleep(1)
 
         print("\n---------------------Trouble Shooter---------------------------------------")
@@ -207,12 +203,12 @@ def renderTXT(Subject,senderMail,senderPassword,reciever_email_list,body_msg):
         mail.login(senderMail,senderPassword)
 
         print("------+------+-------+-------+------+------+------+------+------+------")
-        print("                       Mails To be sent ({})".format(count))
+        print(f"                       Mails To be sent ({count})")
         print("------+------+-------+-------+------+------+------+------+------+------")
 
         ## Loop to Send Emails One-By-One
         for i in range(count):
-            print('\n[Mail]({}) Sending to : {}'.format(i+1,reciever_email_list[i]))
+            print(f'\n[Mail]({i + 1}) Sending to : {reciever_email_list[i]}')
 
             ## Initialize
             SUBJECT = Subject
@@ -227,7 +223,7 @@ def renderTXT(Subject,senderMail,senderPassword,reciever_email_list,body_msg):
 
             # ## Send Mail
             mail.send(Subject=SUBJECT,Sender= SENDER,Reciever=RECIEVER)
-        
+
         ## Exit MassMail Engine
         mail.quitEngine()
 
@@ -242,7 +238,7 @@ def renderTXT(Subject,senderMail,senderPassword,reciever_email_list,body_msg):
         print("                               Error")
         print("-----+------+------+------+------+------+------+------+------+------+------")
         print("Oops!!! An error ocurred....Couldn't send mails")
-        print("Error: {}".format(e))
+        print(f"Error: {e}")
         time.sleep(1)
 
         print("\n---------------------Trouble Shooter---------------------------------------")

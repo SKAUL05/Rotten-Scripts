@@ -29,13 +29,13 @@ def scrap_and_store(soup):
     
     #This dictionary stores the movie information
     movie_info = {}
-    
+
     #Try and except blocks to ensure correct data retrival
     try:
         movie = soup.select(".lister-item-content")[0]
     except:
         movie = "N/A"
-    
+
     if movie == "N/A":
         sys.exit("Movie not found in IMDB")
 
@@ -77,11 +77,7 @@ def scrap_and_store(soup):
     except:
         cast_members = []
 
-    cast_name = ""
-    for member in cast_members:
-        cast_name+=member.contents[0]+", "
-
-
+    cast_name = "".join(f"{member.contents[0]}, " for member in cast_members)
     movie_info['Cast'] = cast_name[:-2]
     return movie_info    
 

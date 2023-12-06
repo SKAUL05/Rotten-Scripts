@@ -5,7 +5,7 @@ class InstagramBot:
 
     # Setting the Basic Constraints in Instagram.
     def __init__(self, path, user_handler):
-        self.url = "https://www.instagram.com{}".format(user_handler)
+        self.url = f"https://www.instagram.com{user_handler}"
         self.driver = webdriver.Chrome(path)
     
     # Download Function to download the Images.
@@ -24,16 +24,16 @@ class InstagramBot:
                 image = self.driver.find_element_by_xpath('//img[@class="_6q-tv]')
             except Exception:
                 print("Trying for the another Possibility")
-            
+
             try:
                 image = self.driver.find_element_by_xpath('//img[@class="be6sR]')
             except Exception:
                 print("Something Went Wrong.")
-            
+
             # Getting the Image Link
             image_link = image.get_attribute('src')
             # Setting the Destination Download Folder.
-            download_path = "./Downloads/{}.png".format(self.user_handler)
+            download_path = f"./Downloads/{self.user_handler}.png"
 
             urlretrieve(image_link, download_path)
             print("Sucessfully Downloaded the Profile Picture.")

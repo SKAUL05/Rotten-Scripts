@@ -10,13 +10,7 @@ def generate_password(password_size):
     symbols = ' !"#$%&\'()*+,-./:;<=>?@[\\^_`{|}'
     available_characters = numbers + symbols + ascii_lowercase + ascii_uppercase
 
-    # Iterate password_size times, each time taking a new random character
-    # from our list of available_characters
-    password = ''
-    for i in range(password_size):
-        password += choice(available_characters)
-
-    return password
+    return ''.join(choice(available_characters) for _ in range(password_size))
 
 
 if __name__ == '__main__':

@@ -19,8 +19,7 @@ reddit = praw.Reddit(client_id=client_id,
 
 def new_posts(subreddit):
     posts = reddit.subreddit(subreddit).new(limit=10)  # New post from Subreddits
-    posts_list = [i.title for i in posts]
-    return posts_list
+    return [i.title for i in posts]
 
 
 def notifyUser(message,title):

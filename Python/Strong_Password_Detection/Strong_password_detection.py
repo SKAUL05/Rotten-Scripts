@@ -1,6 +1,6 @@
 def strong_password_detection(password): 
       
-    AllowedSymbols =[ '#', '@','$', '_', '*', '-'] 
+    AllowedSymbols =[ '#', '@','$', '_', '*', '-']
     flag = 1
     #length of the entered password should be at least 6
     if len(password) < 6: 
@@ -22,8 +22,8 @@ def strong_password_detection(password):
     if not any(char.isupper() for char in password): 
         print('The entered password should have at least one uppercase letter') 
         flag = 0
-    #The entered password should have at least one of the symbols $@#_*     
-    if not any(char in AllowedSymbols for char in password): 
+    #The entered password should have at least one of the symbols $@#_*
+    if all(char not in AllowedSymbols for char in password): 
         print('The entered password should have at least one of the symbols $@#_*') 
         flag = 0
     if flag: 

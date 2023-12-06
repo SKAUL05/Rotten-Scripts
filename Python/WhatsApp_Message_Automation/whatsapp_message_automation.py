@@ -29,8 +29,7 @@ def send_messages():
     
     chats = int(input("Enter the number of personal chats/groups you would want to message "))
 
-    for chat in range(chats):
-
+    for _ in range(chats):
         #This is used to enable the user to search for the contact
         driver.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[2]/div').click()
 
@@ -43,7 +42,7 @@ def send_messages():
 
         #The contact's chat will be opened
         driver.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div[1]/span/div/span/div/div[1]/div/label/div/div[2]').send_keys(Keys.ENTER)
-    
+
         #This enables the user to send more than one message to the same contact
         done = one
         while done:
@@ -57,9 +56,9 @@ def send_messages():
             driver.find_element_by_xpath('/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div[3]/button').click()
 
             print("Would you want to send another message to the same contact ?")
-        
+
             done = int(input("Enter 1 to continue, 0 to stop "))
-        
+
     print("All messages sent successfully")
 
 send_messages()

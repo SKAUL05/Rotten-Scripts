@@ -12,7 +12,7 @@ def generate_qr_code(input_file):
         csv_reader = csv.reader(cf)
         for row in csv_reader:
             qrcode = pyqrcode.create(row[1])
-            qrcode.png(str(row[0]) + ".png", scale=6)
+            qrcode.png(f"{str(row[0])}.png", scale=6)
     print("finished")
 
 

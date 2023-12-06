@@ -25,12 +25,12 @@ def chapterDownload(one_chapter, name):
 
     # webdriver is used to get the number of pages in each chapter
     driver = webdriver.Chrome(ChromeDriverManager().install())
-    URL = "http://www.mangareader.net/" + name + "/" + str(one_chapter)
+    URL = f"http://www.mangareader.net/{name}/{str(one_chapter)}"
     driver.get(URL)
-    
+
     # the element pageMenu is a drop-down which has options for each page
     page = driver.find_element_by_name("pageMenu")
-    number_of_pages = [x for x in page.find_elements_by_tag_name("option")]
+    number_of_pages = list(page.find_elements_by_tag_name("option"))
     last_page = int(number_of_pages[-1].get_attribute("value").split('/')[-1])
     first_page = 1
 
@@ -39,7 +39,7 @@ def chapterDownload(one_chapter, name):
     images = []
     for i in range(first_page, last_page+1):
         # since we now have the number of pages, we can use beautiful soup to get the images
-        url = "http://www.mangareader.net/" + name + "/" + str(one_chapter) + "/" + str(i)
+        url = f"http://www.mangareader.net/{name}/{str(one_chapter)}/{str(i)}"
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
         image = soup.find('img')
@@ -52,9 +52,9 @@ def chapterDownload(one_chapter, name):
     for i in range(1, len(images)):
         img = Image.open(images[i]).convert('RGB')
         image_list.append(img)
-    
+
     # conversion of a list of images to pdf
-    filename = name + "-chapter-" +str(one_chapter) + '.pdf'
+    filename = f"{name}-chapter-{str(one_chapter)}.pdf"
     main_image.save(filename, save_all=True, append_images=image_list)
 
 # to download a single chapter

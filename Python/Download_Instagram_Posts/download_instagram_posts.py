@@ -17,17 +17,15 @@ driver = webdriver.Firefox(options=options)
 def mkdir_p(path):
   try:
     os.makedirs(path)
-  except OSError as exc:  # Python >= 2.5
-    if exc.errno == errno.EEXIST and os.path.isdir(path):
-      pass
-    else:
+  except OSError as exc:# Python >= 2.5
+    if exc.errno != errno.EEXIST or not os.path.isdir(path):
       raise
 
 def parseURL(url):
   return url.replace("&amp;", "&")
 
 def createAccountDirectory(query):
-  dest = "images/{}".format(query)
+  dest = f"images/{query}"
 
   mkdir_p(dest)
 
@@ -39,7 +37,7 @@ def downloadImages(page_source, query):
   soup = BeautifulSoup(page_source, 'html.parser')
   images = soup.findAll("img", {"class": ["FFVAD"]})
 
-  print("Got {} Images".format(len(images)))
+  print(f"Got {len(images)} Images")
 
   image_count = 1
   for image in images:
@@ -50,13 +48,13 @@ def downloadImages(page_source, query):
       img_count_str = f'{image_count:03}'
       image_count += 1
 
-      filename = img_count_str + ".jpg"
-      wget.download(img_src, "{}/{}".format(dest, filename))
+      filename = f"{img_count_str}.jpg"
+      wget.download(img_src, f"{dest}/{filename}")
 
-      print(" Saved", "{}/{}".format(dest, filename))
+      print(" Saved", f"{dest}/{filename}")
   
 def fetchImageSources(query):
-  driver.get("https://www.instagram.com/{}".format(query))  
+  driver.get(f"https://www.instagram.com/{query}")
   last_height = driver.execute_script("return document.body.scrollHeight")
 
   while True:

@@ -4,9 +4,10 @@ import sys
 import tabula
 
 def extract_tables(path, number_pages):
-    tables = tabula.read_pdf(path, multiple_tables=True, pages=number_pages)
-    num = 1
-    if tables:
+    if tables := tabula.read_pdf(
+        path, multiple_tables=True, pages=number_pages
+    ):
+        num = 1
         for table in tables:
             print("Saving file ...")
             table.to_csv(f'Table-{num}.csv')

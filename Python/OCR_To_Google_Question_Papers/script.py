@@ -7,11 +7,7 @@ from googlesearch import search
 
 
 def google_search(query):    # function to google querys
-    search_urls = []
-    for i in search(query, tld='com',num= 1, start= 1, stop= 1):
-        search_urls.append(i)
-    
-    return search_urls
+    return list(search(query, tld='com',num= 1, start= 1, stop= 1))
 
 def scrape(url):            # function to web scrape
     article = Article(url)
@@ -37,59 +33,78 @@ print('\nDoes the text is recognized correctly ? \n')
 print('\nIf the text is not recognized correctly try using a better quality image. \n')
 print('\nDo you want to proceed with this text?(y\\n) \n')
 
-if(input()=='y' or 'Y'):
-    sentences = tokenized_text.split('\n \n')
-    questions = []  
+sentences = tokenized_text.split('\n \n')
+questions = []
+if input()=='y':
     # for loop to seperate questions
-    for i in range(len(sentences)):    
-        if(sentences[i].endswith('?') or  sentences[i].startswith("What") or sentences[i].startswith("When") or sentences[i].startswith("How") or sentences[i].startswith("Why") or sentences[i].startswith("Describe") or sentences[i].startswith("Explain")):
-            questions.append(sentences[i])
-            print(sentences[i])
-        
-    print('\nDo you want to proceed with these recognized questions?(y\\n) \n')
-    if(input()=='y' or 'Y'):
-        print('\nPlease wait while your questions are being searched! \n')
-        search_querys = []
-        # for loop to get URLs of answers
-        for i in range(len(questions)):
-            query = questions[i]
-            output = google_search(query)
-            search_querys.append(output)
-            
-        solutions = {}
-        # for loop to scrape answers from URLs
-        for i in range(len(search_querys)):
-            keys = questions[i]
-            try:
-                answers = scrape(search_querys[i][0])
-            except Exception as e:
-                values = e
-            values = answers
-            solutions[keys] = values
-        
-        # for loopp to display
-        for x,y in solutions.items():
-            print('\n******************\n')
-            print(x)
-            print('\n answer = \n')
-            print(y)
-            print('\n******************\n')
-        
-        print('\nAll questions have been answered! \n')
+    for sentence in sentences:
+        if (
+            sentence.endswith('?')
+            or sentence.startswith("What")
+            or sentence.startswith("When")
+            or sentence.startswith("How")
+            or sentence.startswith("Why")
+            or sentence.startswith("Describe")
+            or sentence.startswith("Explain")
+        ):
+            questions.append(sentence)
+            print(sentence)
 
-        print('\nDo you want the URLs of the answers?(y\\n)\n')
-        if(input()=='y' or 'Y'):
-            # for loop to display URLs
-            for i in range(len(search_querys)):
-                print(search_querys[i][0])
-                
-            print('Thank You!')
-        else:
-            print('Thank You!')
-    else:
-        print('Thank You!')        
 else:
-    print('Thank You!')
+    # for loop to seperate questions
+    for sentence_ in sentences:
+        if (
+            sentence_.endswith('?')
+            or sentence_.startswith("What")
+            or sentence_.startswith("When")
+            or sentence_.startswith("How")
+            or sentence_.startswith("Why")
+            or sentence_.startswith("Describe")
+            or sentence_.startswith("Explain")
+        ):
+            questions.append(sentence_)
+            print(sentence_)
+
+print('\nDo you want to proceed with these recognized questions?(y\\n) \n')
+search_querys = []
+solutions = {}
+if input()=='y':
+    print('\nPlease wait while your questions are being searched! \n')
+else:
+    print('\nPlease wait while your questions are being searched! \n')
+        # for loop to get URLs of answers
+for question in questions:
+    query = question
+    output = google_search(query)
+    search_querys.append(output)
+
+# for loop to scrape answers from URLs
+for i in range(len(search_querys)):
+    keys = questions[i]
+    try:
+        answers = scrape(search_querys[i][0])
+    except Exception as e:
+        values = e
+    values = answers
+    solutions[keys] = values
+
+# for loopp to display
+for x,y in solutions.items():
+    print('\n******************\n')
+    print(x)
+    print('\n answer = \n')
+    print(y)
+    print('\n******************\n')
+
+print('\nAll questions have been answered! \n')
+
+print('\nDo you want the URLs of the answers?(y\\n)\n')
+if (input()=='y' or 'Y'):
+            # for loop to display URLs
+    for search_query in search_querys:
+        print(search_query[0])
+
+print('Thank You!')
         
     
 

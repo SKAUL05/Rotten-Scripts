@@ -22,7 +22,7 @@ def get_font(filename="OpenSans-Regular.ttf"):
     """
     font_file = os.path.join(here, "fonts", filename)
     if not os.path.exists(font_file):
-        sys.exit("Font %s does not exist." % font_file)
+        sys.exit(f"Font {font_file} does not exist.")
     return font_file
 
 

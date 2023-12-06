@@ -10,13 +10,13 @@ def capture(path, choice, margin, text):
     video = cv2.VideoCapture(path)  # video object
     countFrame = 0
     img_array = []  # store all the watermaked frames
-    progress_bar = tqdm(unit=' Frames Processed', unit_scale=True)  
-    while(video.isOpened()):
+    progress_bar = tqdm(unit=' Frames Processed', unit_scale=True)
+    while (video.isOpened()):
         sucess, frame = video.read()
         if sucess == False:
             break
-        cv2.imwrite('frame'+str(countFrame)+'.jpg',frame)
-        image = Image.open('frame'+str(countFrame)+'.jpg')
+        cv2.imwrite(f'frame{str(countFrame)}.jpg', frame)
+        image = Image.open(f'frame{str(countFrame)}.jpg')
         width, height = image.size
         size = (width, height)
         draw = ImageDraw.Draw(image)  # drawing object
@@ -42,18 +42,18 @@ def capture(path, choice, margin, text):
             break
 
         draw.text((x, y), text, font=font)
-        image.save('frame converted'+str(countFrame)+'.jpg')
-        img = cv2.imread('frame converted'+str(countFrame)+'.jpg')
+        image.save(f'frame converted{str(countFrame)}.jpg')
+        img = cv2.imread(f'frame converted{str(countFrame)}.jpg')
         img_array.append(img)
-        os.remove('frame'+str(countFrame)+'.jpg')
-        os.remove('frame converted'+str(countFrame)+'.jpg')
+        os.remove(f'frame{str(countFrame)}.jpg')
+        os.remove(f'frame converted{str(countFrame)}.jpg')
         progress_bar.update()
         countFrame += 1
 
     video.release()
     video_write = cv2.VideoWriter('output.avi',cv2.VideoWriter_fourcc(*'DIVX'), 30, size)
-    for i in range(len(img_array)):
-        video_write.write(img_array[i])
+    for item in img_array:
+        video_write.write(item)
     video_write.release()
 
     my_clip = mpe.VideoFileClip('output.avi')

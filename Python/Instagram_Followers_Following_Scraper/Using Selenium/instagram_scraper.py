@@ -117,4 +117,3 @@ if __name__ == "__main__":
         convert_to_csv(followers, following, insta_id)
     except NoSuchElementException:
         print("Invalid Account/ Private Account")
-        pass
